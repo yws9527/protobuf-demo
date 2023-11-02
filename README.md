@@ -1,18 +1,43 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 + TypeScript + Vite + Protobuf + Express + Mockjs
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+本项目是为了练习protobuf在实际开发中的使用，包含了Web端和服务端的编解码
 
-## Recommended IDE Setup
+## 打开方式
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+   1. 需要预先了解下Protobuf的基础知识
 
-## Type Support For `.vue` Imports in TS
+   2. 需要npm全局安装esno，好处是可以直接解析运行ts而不借助其他库
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## 跑起来
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+   1. 依赖安装
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+      ```sh
+         pnpm i
+      ```
+
+   2. 生成protobuf文件对应的ts
+
+      ```sh
+         pnpm run protobuf
+      ```
+
+   3. 启动Web服务
+
+      ```sh
+         pnpm run dev
+      ```
+
+   4. 启动Server服务
+
+      ```sh
+         pnpm run server
+      ```
+
+## 参考地址
+
+   1. [https://www.fengxianqi.com/index.php/archives/130/](https://www.fengxianqi.com/index.php/archives/130/)
+   2. [https://www.axios-http.cn/docs/intro](https://www.axios-http.cn/docs/intro)
+   3. [http://mockjs.com/](http://mockjs.com/examples.html)
+   4. [https://juejin.cn/post/6936116540068593695](https://juejin.cn/post/6936116540068593695)
+   5. [https://juejin.cn/post/6916164817409540104](https://juejin.cn/post/6916164817409540104)
