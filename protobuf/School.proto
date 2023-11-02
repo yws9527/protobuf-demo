@@ -1,0 +1,29 @@
+syntax = "proto3";
+package school;
+
+import "Grade.proto";
+
+message PBSchool {
+  uint64 schoolId = 1;
+  string schoolName = 2;
+  string schoolCode = 3;
+  PBSchoolType type = 4;
+  repeated PBGrade children = 5;
+  
+}
+
+enum PBSchoolType {
+  PRIMARY = 0;   // 小学
+  MIDDLE = 1;    // 初中
+  SENIOR = 2;    // 高中
+  COLLEGE = 3;   // 大学
+}
+
+message PBSchoolListReq {
+  uint32 offset = 1;
+  uint32 limit = 2;
+}
+
+message PBSchoolListRsp {
+  repeated PBSchool list = 1;
+}

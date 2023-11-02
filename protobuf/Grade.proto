@@ -1,0 +1,11 @@
+syntax = "proto3";
+package school;
+
+import "Class.proto";
+
+message PBGrade {
+  uint64 gradeId = 1;
+  string gradeName = 2;
+  string gradeCode = 3;
+  repeated PBClass children = 4;
+}
