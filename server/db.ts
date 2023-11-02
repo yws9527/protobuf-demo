@@ -34,7 +34,7 @@ const classNames = [...gradeNames.map((gname) => {
 
 const generSchools = () => {
   return Mock.mock({
-    'list|150': [
+    'list|4': [
       {
         "type": 0,
         "schoolId|+1": 1,

@@ -2,7 +2,7 @@
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="onClick">请求计数： {{ count }} 次</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
@@ -30,8 +30,14 @@
   defineProps<{ msg: string }>();
   const count = ref(0);
 
+  function onClick() {
+    count.value += 1;
+    getSchoolListReq();
+  }
+
   async function getSchoolListReq() {
     try {
+      console.count('=========请求次数=========');
       const response = await getSchoolList({
         limit: 20,
         offset: 0,
@@ -41,8 +47,6 @@
       throw error;
     }
   }
-
-  getSchoolListReq();
 </script>
 
 <style scoped>
