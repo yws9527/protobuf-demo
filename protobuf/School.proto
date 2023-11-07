@@ -4,12 +4,12 @@ package school;
 import "Grade.proto";
 
 message PBSchool {
-  uint64 schoolId = 1;
-  string schoolName = 2;
-  string schoolCode = 3;
-  PBSchoolType type = 4;
-  repeated PBGrade children = 5;
-  
+  int32 type = 1;
+  uint64 schoolId = 2;
+  string schoolName = 3;
+  string schoolCode = 4;
+  PBSchoolType schoolType = 5;
+  repeated PBGrade children = 6;
 }
 
 enum PBSchoolType {

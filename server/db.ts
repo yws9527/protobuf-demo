@@ -32,7 +32,7 @@ const classNames = [...gradeNames.map((gname) => {
   return cnames;
 })].flat();
 
-const generSchools = () => {
+const generMockSchool = () => {
   return Mock.mock({
     'list|4': [
       {
@@ -61,5 +61,5 @@ const generSchools = () => {
 
 
 export {
-  generSchools
+  generMockSchool
 }

@@ -13,8 +13,8 @@ message PBMessageRequest {
 // 消息响应包
 message PBMessageResponse {
   uint32 type = 1;                            // 消息类型
-  bytes messageData = 2;                      // 返回数据
-  uint32 resultCode = 3;                      // 返回的结果码
+  optional bytes messageData = 2;             // 返回数据
+  optional uint32 resultCode = 3;             // 返回的结果码
   optional string resultInfo = 4;             // 返回的结果消息提示文本（用于错误提示）
 }
 

@@ -17,23 +17,27 @@ import { PBGrade } from "./Grade";
  */
 export interface PBSchool {
     /**
-     * @generated from protobuf field: uint64 schoolId = 1;
+     * @generated from protobuf field: int32 type = 1;
+     */
+    type: number;
+    /**
+     * @generated from protobuf field: uint64 schoolId = 2;
      */
     schoolId: string;
     /**
-     * @generated from protobuf field: string schoolName = 2;
+     * @generated from protobuf field: string schoolName = 3;
      */
     schoolName: string;
     /**
-     * @generated from protobuf field: string schoolCode = 3;
+     * @generated from protobuf field: string schoolCode = 4;
      */
     schoolCode: string;
     /**
-     * @generated from protobuf field: school.PBSchoolType type = 4;
+     * @generated from protobuf field: school.PBSchoolType schoolType = 5;
      */
-    type: PBSchoolType;
+    schoolType: PBSchoolType;
     /**
-     * @generated from protobuf field: repeated school.PBGrade children = 5;
+     * @generated from protobuf field: repeated school.PBGrade children = 6;
      */
     children: PBGrade[];
 }
@@ -92,15 +96,16 @@ export enum PBSchoolType {
 class PBSchool$Type extends MessageType<PBSchool> {
     constructor() {
         super("school.PBSchool", [
-            { no: 1, name: "schoolId", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
-            { no: 2, name: "schoolName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "schoolCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "type", kind: "enum", T: () => ["school.PBSchoolType", PBSchoolType] },
-            { no: 5, name: "children", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PBGrade }
+            { no: 1, name: "type", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "schoolId", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
+            { no: 3, name: "schoolName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "schoolCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "schoolType", kind: "enum", T: () => ["school.PBSchoolType", PBSchoolType] },
+            { no: 6, name: "children", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PBGrade }
         ]);
     }
     create(value?: PartialMessage<PBSchool>): PBSchool {
-        const message = { schoolId: "0", schoolName: "", schoolCode: "", type: 0, children: [] };
+        const message = { type: 0, schoolId: "0", schoolName: "", schoolCode: "", schoolType: 0, children: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PBSchool>(this, message, value);
@@ -111,19 +116,22 @@ class PBSchool$Type extends MessageType<PBSchool> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* uint64 schoolId */ 1:
-                    message.schoolId = reader.uint64().toString();
-                    break;
-                case /* string schoolName */ 2:
-                    message.schoolName = reader.string();
-                    break;
-                case /* string schoolCode */ 3:
-                    message.schoolCode = reader.string();
-                    break;
-                case /* school.PBSchoolType type */ 4:
+                case /* int32 type */ 1:
                     message.type = reader.int32();
                     break;
-                case /* repeated school.PBGrade children */ 5:
+                case /* uint64 schoolId */ 2:
+                    message.schoolId = reader.uint64().toString();
+                    break;
+                case /* string schoolName */ 3:
+                    message.schoolName = reader.string();
+                    break;
+                case /* string schoolCode */ 4:
+                    message.schoolCode = reader.string();
+                    break;
+                case /* school.PBSchoolType schoolType */ 5:
+                    message.schoolType = reader.int32();
+                    break;
+                case /* repeated school.PBGrade children */ 6:
                     message.children.push(PBGrade.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -138,21 +146,24 @@ class PBSchool$Type extends MessageType<PBSchool> {
         return message;
     }
     internalBinaryWrite(message: PBSchool, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 schoolId = 1; */
-        if (message.schoolId !== "0")
-            writer.tag(1, WireType.Varint).uint64(message.schoolId);
-        /* string schoolName = 2; */
-        if (message.schoolName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.schoolName);
-        /* string schoolCode = 3; */
-        if (message.schoolCode !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.schoolCode);
-        /* school.PBSchoolType type = 4; */
+        /* int32 type = 1; */
         if (message.type !== 0)
-            writer.tag(4, WireType.Varint).int32(message.type);
-        /* repeated school.PBGrade children = 5; */
+            writer.tag(1, WireType.Varint).int32(message.type);
+        /* uint64 schoolId = 2; */
+        if (message.schoolId !== "0")
+            writer.tag(2, WireType.Varint).uint64(message.schoolId);
+        /* string schoolName = 3; */
+        if (message.schoolName !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.schoolName);
+        /* string schoolCode = 4; */
+        if (message.schoolCode !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.schoolCode);
+        /* school.PBSchoolType schoolType = 5; */
+        if (message.schoolType !== 0)
+            writer.tag(5, WireType.Varint).int32(message.schoolType);
+        /* repeated school.PBGrade children = 6; */
         for (let i = 0; i < message.children.length; i++)
-            PBGrade.internalBinaryWrite(message.children[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            PBGrade.internalBinaryWrite(message.children[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

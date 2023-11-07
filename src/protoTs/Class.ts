@@ -16,15 +16,19 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface PBClass {
     /**
-     * @generated from protobuf field: uint64 classId = 1;
+     * @generated from protobuf field: int32 type = 1;
+     */
+    type: number;
+    /**
+     * @generated from protobuf field: uint64 classId = 2;
      */
     classId: string;
     /**
-     * @generated from protobuf field: string className = 2;
+     * @generated from protobuf field: string className = 3;
      */
     className: string;
     /**
-     * @generated from protobuf field: string classCode = 3;
+     * @generated from protobuf field: string classCode = 4;
      */
     classCode: string;
 }
@@ -32,13 +36,14 @@ export interface PBClass {
 class PBClass$Type extends MessageType<PBClass> {
     constructor() {
         super("school.PBClass", [
-            { no: 1, name: "classId", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
-            { no: 2, name: "className", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "classCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "type", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "classId", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
+            { no: 3, name: "className", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "classCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PBClass>): PBClass {
-        const message = { classId: "0", className: "", classCode: "" };
+        const message = { type: 0, classId: "0", className: "", classCode: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PBClass>(this, message, value);
@@ -49,13 +54,16 @@ class PBClass$Type extends MessageType<PBClass> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* uint64 classId */ 1:
+                case /* int32 type */ 1:
+                    message.type = reader.int32();
+                    break;
+                case /* uint64 classId */ 2:
                     message.classId = reader.uint64().toString();
                     break;
-                case /* string className */ 2:
+                case /* string className */ 3:
                     message.className = reader.string();
                     break;
-                case /* string classCode */ 3:
+                case /* string classCode */ 4:
                     message.classCode = reader.string();
                     break;
                 default:
@@ -70,15 +78,18 @@ class PBClass$Type extends MessageType<PBClass> {
         return message;
     }
     internalBinaryWrite(message: PBClass, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 classId = 1; */
+        /* int32 type = 1; */
+        if (message.type !== 0)
+            writer.tag(1, WireType.Varint).int32(message.type);
+        /* uint64 classId = 2; */
         if (message.classId !== "0")
-            writer.tag(1, WireType.Varint).uint64(message.classId);
-        /* string className = 2; */
+            writer.tag(2, WireType.Varint).uint64(message.classId);
+        /* string className = 3; */
         if (message.className !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.className);
-        /* string classCode = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.className);
+        /* string classCode = 4; */
         if (message.classCode !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.classCode);
+            writer.tag(4, WireType.LengthDelimited).string(message.classCode);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

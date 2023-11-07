@@ -4,8 +4,9 @@ package school;
 import "Class.proto";
 
 message PBGrade {
-  uint64 gradeId = 1;
-  string gradeName = 2;
-  string gradeCode = 3;
-  repeated PBClass children = 4;
+  int32 type = 1;
+  uint64 gradeId = 2;
+  string gradeName = 3;
+  string gradeCode = 4;
+  repeated PBClass children = 5;
 }

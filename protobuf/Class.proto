@@ -2,7 +2,8 @@ syntax = "proto3";
 package school;
 
 message PBClass {
-  uint64 classId = 1;
-  string className = 2;
-  string classCode = 3;
+  int32 type = 1;
+  uint64 classId = 2;
+  string className = 3;
+  string classCode = 4;
 }

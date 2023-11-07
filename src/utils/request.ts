@@ -1,9 +1,8 @@
 
-import { nanoid } from 'nanoid';  
 import protobuf from 'protobufjs'
-import httpService from '@/config/services';
-import { PBMessageRequest, PBMessageResponse, PBMessageType } from '@/protoTs/MessageType';
+import httpService, { token, apiVersion } from '@/config/services';
 import { PBSchool, PBSchoolListReq, PBSchoolListRsp } from '@/protoTs/School';
+import { PBMessageRequest, PBMessageResponse, PBMessageType } from '@/protoTs/MessageType';
 
 type ImesgType = keyof typeof PBMessageType;
 
@@ -11,8 +10,6 @@ type ImesgType = keyof typeof PBMessageType;
 // const PBMessageRequest = protoRoot.lookup('framework.PBMessageRequest')
 // 响应体的message
 // const PBMessageResponse = protoRoot.lookup('framework.PBMessageResponse')
-const token = nanoid();
-const apiVersion = '1.0.0';
 
 function getMessageTypeValue(msgType: ImesgType) {
   // const PBMessageType = protoRoot.lookup('framework.PBMessageType')
@@ -25,7 +22,7 @@ function getMessageTypeValue(msgType: ImesgType) {
  * @param {*} requestBody 请求体参数
  * @param {*} responseType 返回值
  */
-function request(msgType: ImesgType, requestBody: Uint8Array, responseType: any) {
+function request(path: string, msgType: ImesgType, requestBody: Uint8Array, responseType: any) {
   // 得到api的枚举值
   const _msgType = getMessageTypeValue(msgType);
 
@@ -46,7 +43,7 @@ function request(msgType: ImesgType, requestBody: Uint8Array, responseType: any)
   // transformRequest 发起请求时，调用transformRequest方法，目的是将req转换成二进制
   // transformResponse 对返回的数据进行处理，目的是将二进制转换成真正的json数据
   return httpService
-    .post('/school', req, { transformRequest, transformResponse })
+    .post(path, req, { transformRequest, transformResponse })
     .then(({ data, status }) => {
       // 对请求做处理
       if (status !== 200) {
@@ -71,7 +68,8 @@ function isArrayBuffer (obj: any) {
 const schools: PBSchoolListRsp = {
   list: [
     {
-      type: 0,
+      type: 1,
+      schoolType: 1,
       schoolName: '安义县实验小学',
       schoolCode: 'SC1700046774034571264',
       schoolId: '1700046774001016832',

@@ -49,13 +49,13 @@ export interface PBMessageResponse {
      */
     type: number; // 消息类型
     /**
-     * @generated from protobuf field: bytes messageData = 2;
+     * @generated from protobuf field: optional bytes messageData = 2;
      */
-    messageData: Uint8Array; // 返回数据
+    messageData?: Uint8Array; // 返回数据
     /**
-     * @generated from protobuf field: uint32 resultCode = 3;
+     * @generated from protobuf field: optional uint32 resultCode = 3;
      */
-    resultCode: number; // 返回的结果码
+    resultCode?: number; // 返回的结果码
     /**
      * @generated from protobuf field: optional string resultInfo = 4;
      */
@@ -154,13 +154,13 @@ class PBMessageResponse$Type extends MessageType<PBMessageResponse> {
     constructor() {
         super("framework.PBMessageResponse", [
             { no: 1, name: "type", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "messageData", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "resultCode", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "messageData", kind: "scalar", opt: true, T: 12 /*ScalarType.BYTES*/ },
+            { no: 3, name: "resultCode", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
             { no: 4, name: "resultInfo", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PBMessageResponse>): PBMessageResponse {
-        const message = { type: 0, messageData: new Uint8Array(0), resultCode: 0 };
+        const message = { type: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PBMessageResponse>(this, message, value);
@@ -174,10 +174,10 @@ class PBMessageResponse$Type extends MessageType<PBMessageResponse> {
                 case /* uint32 type */ 1:
                     message.type = reader.uint32();
                     break;
-                case /* bytes messageData */ 2:
+                case /* optional bytes messageData */ 2:
                     message.messageData = reader.bytes();
                     break;
-                case /* uint32 resultCode */ 3:
+                case /* optional uint32 resultCode */ 3:
                     message.resultCode = reader.uint32();
                     break;
                 case /* optional string resultInfo */ 4:
@@ -198,11 +198,11 @@ class PBMessageResponse$Type extends MessageType<PBMessageResponse> {
         /* uint32 type = 1; */
         if (message.type !== 0)
             writer.tag(1, WireType.Varint).uint32(message.type);
-        /* bytes messageData = 2; */
-        if (message.messageData.length)
+        /* optional bytes messageData = 2; */
+        if (message.messageData !== undefined)
             writer.tag(2, WireType.LengthDelimited).bytes(message.messageData);
-        /* uint32 resultCode = 3; */
-        if (message.resultCode !== 0)
+        /* optional uint32 resultCode = 3; */
+        if (message.resultCode !== undefined)
             writer.tag(3, WireType.Varint).uint32(message.resultCode);
         /* optional string resultInfo = 4; */
         if (message.resultInfo !== undefined)
