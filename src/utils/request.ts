@@ -47,10 +47,9 @@ function request(path: string, msgType: ImesgType, requestBody: Uint8Array, resp
     .then(({ data, status }) => {
       // 对请求做处理
       if (status !== 200) {
-        const err = new Error('服务器异常');
-        throw err;
+        throw new Error('服务器异常');
       }
-      console.log(data);
+      return data;
     },(err) => {
       throw err;
     })

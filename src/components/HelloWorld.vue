@@ -49,7 +49,7 @@
         limit: 20,
         offset: 0,
       });
-      console.log(response);
+      console.log('mockResponse', response);
     } catch (error) {
       throw error;
     }
