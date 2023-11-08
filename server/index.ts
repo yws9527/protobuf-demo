@@ -72,7 +72,7 @@ function run() {
     res.send(_resData);
   });
 
-  app.post('/schoolTree', express.text({ type: '*/*' }), async function(req, res, next) {
+  app.post('/schoolTree', express.text({ type: '*/*' }), async function(req, res) {
     // console.log('==========', req.headers);
     globalMap.clear();
     try {

@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-const Random = Mock.Random;
+// const Random = Mock.Random;
 
 const _gradeNames = [
   ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
