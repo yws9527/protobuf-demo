@@ -3,12 +3,12 @@ import Mock from 'mockjs';
 const Random = Mock.Random;
 
 const _gradeNames = [
-  '一年级', '二年级', '三年级', '四年级', '五年级', '六年级',
-  '初一', '初二', '初三',
-  '高一', '高二', '高三',
+  ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+  ['初一', '初二', '初三'],
+  ['高一', '高二', '高三'],
 ];
 
-const _gNames = [ '一年级', '二年级', '三年级', '四年级', '五年级', '六年级' ];
+const _gNames = _gradeNames[0];
 
 const schoolNames = new Array(500).fill('').map(() => Mock.mock('@ctitle(5)学校'));
 

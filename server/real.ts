@@ -1,3 +1,4 @@
+import Colors from 'picocolors';
 import { customAlphabet } from 'nanoid';
 import { PBSchool } from '@/protoTs/School';
 import { planSchool, planGrade, planClasses } from './utils';
@@ -6,7 +7,7 @@ const nanoid = customAlphabet('1234567890', 19);
 async function generTreeSchool() {
   const list: PBSchool[] = [];
   try {
-    const { data: { succ, msg, data } } = await planSchool();
+    const { data: { succ, msg, data, code } } = await planSchool();
 
     if (succ) {
       const schools = (data || []).map((s: any) => {
@@ -50,9 +51,10 @@ async function generTreeSchool() {
         schoolItem.children = grades;
       }
     } else {
-      throw msg;
+      throw { succ, msg, code };
     }
-  } catch (error) {
+  } catch (error: any) {
+    console.log(Colors.bold(Colors.red('error: ')), error);
     throw error;
   }
   

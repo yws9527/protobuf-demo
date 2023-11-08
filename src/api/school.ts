@@ -12,12 +12,11 @@ const urls = {
 // getStudentList 是接口名称
 export function getSchoolList(params: PBSchoolListReq) {
   const req = request.create(PBSchoolListReq, params);
-  return request(urls.school, 'getSchoolList', req, PBSchoolListRsp);
+  return request(urls.school, 'getSchoolList', PBSchoolListRsp, req);
 }
 
-export function getSchoolTree(params: PBSchoolListReq) {
-  const req = request.create(PBSchoolListReq, params);
-  return request(urls.schoolTree, 'getSchoolList', req, PBSchoolListRsp);
+export function getSchoolTree() {
+  return request(urls.schoolTree, 'getSchoolTreeList', PBSchoolListRsp);
 }
 
 // 后面如果再添加接口直接以此类推

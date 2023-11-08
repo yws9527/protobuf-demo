@@ -25,12 +25,25 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
+  import { storage } from '@/utils/storage';
   import { getSchoolList, getSchoolTree } from '@/api/school.ts';
 
   defineProps<{ msg: string }>();
   const mockCount = ref(0);
   const treeCount = ref(0);
+  const inputTokenVal = ref('');
+
+  function inputToken() {
+    inputTokenVal.value = storage.get('token');
+    !inputTokenVal.value && setTimeout(() => {
+      const input = window.prompt('请输入测试token');
+      if (input) {
+        storage.set('token', input);
+        inputTokenVal.value = input;
+      }
+    }, 1500);
+  }
 
   function onMockClick() {
     mockCount.value += 1;
@@ -58,15 +71,18 @@
   async function getSchoolTreeReq() {
     try {
       console.count('=========tree请求次数=========');
-      const response = await getSchoolTree({
-        limit: 20,
-        offset: 0,
-      });
+      const response = await getSchoolTree();
       console.log('treeResponse', response);
+      if (response.resultCode === 902 || response.resultCode === 903) {
+        storage.clear();
+        inputToken();
+      }
     } catch (error) {
       throw error;
     }
   }
+
+  onMounted(inputToken);
 </script>
 
 <style scoped>

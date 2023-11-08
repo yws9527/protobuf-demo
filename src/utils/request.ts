@@ -1,8 +1,8 @@
 
 import protobuf from 'protobufjs'
-import httpService, { token, apiVersion } from '@/config/services';
-import { PBSchool, PBSchoolListReq, PBSchoolListRsp } from '@/protoTs/School';
+import httpService, { apiVersion } from '@/config/services';
 import { PBMessageRequest, PBMessageResponse, PBMessageType } from '@/protoTs/MessageType';
+import { storage } from './storage';
 
 type ImesgType = keyof typeof PBMessageType;
 
@@ -18,12 +18,14 @@ function getMessageTypeValue(msgType: ImesgType) {
 
 /**
  * 
+ * @param {*} path 接口地址
  * @param {*} msgType 接口名称
+ * @param {*} responseType 返回体类型
  * @param {*} requestBody 请求体参数
- * @param {*} responseType 返回值
  */
-function request(path: string, msgType: ImesgType, requestBody: Uint8Array, responseType: any) {
+function request(path: string, msgType: ImesgType, responseType: any, requestBody?: Uint8Array, ) {
   // 得到api的枚举值
+  const token = storage.get('token');
   const _msgType = getMessageTypeValue(msgType);
 
   // 请求需要的数据
@@ -37,6 +39,7 @@ function request(path: string, msgType: ImesgType, requestBody: Uint8Array, resp
   // 将对象序列化成请求体实例
   const req = PBMessageRequest.create(reqData);
   const transformResponse = transformResponseFactory(responseType);
+  httpService.defaults.headers['satoken'] = token;
   
   // 调用axios发起请求
   // 这里用到axios的配置项：transformRequest和transformResponse
@@ -45,10 +48,7 @@ function request(path: string, msgType: ImesgType, requestBody: Uint8Array, resp
   return httpService
     .post(path, req, { transformRequest, transformResponse })
     .then(({ data, status }) => {
-      // 对请求做处理
-      if (status !== 200) {
-        throw new Error('服务器异常');
-      }
+      if (status !== 200) throw new Error('服务器异常');
       return data;
     },(err) => {
       throw err;
@@ -64,28 +64,6 @@ function isArrayBuffer (obj: any) {
   return Object.prototype.toString.call(obj) === '[object ArrayBuffer]';
 }
 
-const schools: PBSchoolListRsp = {
-  list: [
-    {
-      type: 1,
-      schoolType: 1,
-      schoolName: '安义县实验小学',
-      schoolCode: 'SC1700046774034571264',
-      schoolId: '1700046774001016832',
-      children: [],
-    }
-  ]
-};
-
-function genResponse(data: PBSchoolListRsp) {
-  const data2 = {
-    type: 0,
-    resultCode: 200,
-    messageData: PBSchoolListRsp.toBinary(data),
-  };
-  return PBMessageResponse.toBinary(data2);
-}
-
 function transformResponseFactory(responseType: any) {
   return function transformResponse(rawResponse: number | number[] | null | undefined) {
     // 判断response是否是arrayBuffer
@@ -97,7 +75,6 @@ function transformResponseFactory(responseType: any) {
       const raw = JSON.parse(enc.decode(new Uint8Array(rawResponse as number[])));
       const buf = protobuf.util.newBuffer(Object.values(raw));
       // const buf = protobuf.util.newBuffer(rawResponse);
-      // const buf = genResponse(schools);
       // decode响应体
       const decodedResponse = PBMessageResponse.fromBinary(buf);
       if (decodedResponse.messageData && responseType) {
@@ -113,11 +90,11 @@ function transformResponseFactory(responseType: any) {
 }
 
 // 在request下添加一个方法，方便用于处理请求参数
-request.create = function (pbConstruct: any, obj: any) {
+request.create = function (pbConstruct: any, data: any) {
   // const pbConstruct = protoRoot.lookup(protoName);
   // return pbConstruct.encode(obj).finish();
-  const _obj = pbConstruct.create(obj);
-  return pbConstruct.toBinary(_obj);
+  const _data = pbConstruct.create(data);
+  return pbConstruct.toBinary(_data);
 }
 
 export default request;

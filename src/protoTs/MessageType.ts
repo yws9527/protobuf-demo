@@ -22,9 +22,9 @@ export interface PBMessageRequest {
      */
     type: number; // 消息类型
     /**
-     * @generated from protobuf field: bytes messageData = 2;
+     * @generated from protobuf field: optional bytes messageData = 2;
      */
-    messageData: Uint8Array; // 请求数据
+    messageData?: Uint8Array; // 请求数据
     /**
      * @generated from protobuf field: uint64 timestamp = 3;
      */
@@ -72,21 +72,27 @@ export enum PBMessageType {
      *
      * @generated from protobuf enum value: getSchoolList = 0;
      */
-    getSchoolList = 0
+    getSchoolList = 0,
+    /**
+     * 获取学校树形列表, {} => PBSchoolListRsp
+     *
+     * @generated from protobuf enum value: getSchoolTreeList = 1;
+     */
+    getSchoolTreeList = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PBMessageRequest$Type extends MessageType<PBMessageRequest> {
     constructor() {
         super("framework.PBMessageRequest", [
             { no: 1, name: "type", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "messageData", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "messageData", kind: "scalar", opt: true, T: 12 /*ScalarType.BYTES*/ },
             { no: 3, name: "timestamp", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
             { no: 4, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PBMessageRequest>): PBMessageRequest {
-        const message = { type: 0, messageData: new Uint8Array(0), timestamp: "0", version: "", token: "" };
+        const message = { type: 0, timestamp: "0", version: "", token: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PBMessageRequest>(this, message, value);
@@ -100,7 +106,7 @@ class PBMessageRequest$Type extends MessageType<PBMessageRequest> {
                 case /* uint32 type */ 1:
                     message.type = reader.uint32();
                     break;
-                case /* bytes messageData */ 2:
+                case /* optional bytes messageData */ 2:
                     message.messageData = reader.bytes();
                     break;
                 case /* uint64 timestamp */ 3:
@@ -127,8 +133,8 @@ class PBMessageRequest$Type extends MessageType<PBMessageRequest> {
         /* uint32 type = 1; */
         if (message.type !== 0)
             writer.tag(1, WireType.Varint).uint32(message.type);
-        /* bytes messageData = 2; */
-        if (message.messageData.length)
+        /* optional bytes messageData = 2; */
+        if (message.messageData !== undefined)
             writer.tag(2, WireType.LengthDelimited).bytes(message.messageData);
         /* uint64 timestamp = 3; */
         if (message.timestamp !== "0")
