@@ -31,7 +31,6 @@
     "dayjs": "^1.11.10",
     "esno": "^0.17.0",
     "picocolors": "^1.0.0",
-    "protobufjs-cli": "^1.1.2",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-commonjs": "^0.10.0",

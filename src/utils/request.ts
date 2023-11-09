@@ -1,8 +1,8 @@
 
 import protobuf from 'protobufjs'
+import { storage } from './storage';
 import httpService, { apiVersion } from '@/config/services';
 import { PBMessageRequest, PBMessageResponse, PBMessageType } from '@/protoTs/MessageType';
-import { storage } from './storage';
 
 type ImesgType = keyof typeof PBMessageType;
 
@@ -71,6 +71,7 @@ function transformResponseFactory(responseType: any) {
       return rawResponse;
     }
     try {
+      // 请求时已设定responseType为'arraybuffer'，所以这里需要预先处理数据
       const enc = new TextDecoder('utf-8');
       const raw = JSON.parse(enc.decode(new Uint8Array(rawResponse as number[])));
       const buf = protobuf.util.newBuffer(Object.values(raw));
